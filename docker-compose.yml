@@ -1,0 +1,82 @@
+version: '3'
+
+services:
+   # mysql:
+   #    image: mysql:8.0.27
+   #    container_name: mysql
+   #    restart: always
+   #    volumes:
+   #       - /home/betocalestini/mysqldb:/var/lib/mysql
+   #    environment:
+   #       - MYSQL_USER=betocalestini
+   #       - MYSQL_PASSWORD=senha
+   #       - MYSQL_ROOT_PASSWORD=admin
+   #       - TZ=America/Sao_Paulo
+   #    ports:
+   #       - 3307:3306
+   #    networks:
+   #       - rede1
+
+   postgres:
+      image: 'postgres:latest'
+      container_name: postgres
+      user: postgres
+      environment:
+         - POSTGRES_USER=postgres
+         - POSTGRES_PASSWORD=postgres
+         - POSTGRES_DB=postgres
+         - TimeZone=America/Sao_Paulo
+      ports:
+         - '5432:5432'
+      volumes:
+         - /home/betocalestini/postgres:/var/lib/postgresql/data
+      networks:
+         - rede1
+
+   pgadmin-compose:
+      image: dpage/pgadmin4
+      container_name: pgadmin
+      environment:
+         PGADMIN_DEFAULT_EMAIL: 'betocalestini@hotmail.com'
+         PGADMIN_DEFAULT_PASSWORD: '/cpi10int'
+         TimeZone: 'America/Sao_Paulo'
+      ports:
+         - '54321:80'
+      depends_on:
+         - postgres
+      networks:
+         - rede1
+
+   # mysql-workbench:
+   #    image: linuxserver/mysql-workbench:latest
+   #    container_name: mysql-workbench
+   #    environment:
+   #       - PUID=1000
+   #       - PGID=1000
+   #       - TZ=America/Sao_Paulo
+   #    volumes:
+   #       - /home/betocalestini/mysqlwb/config:/config
+   #    ports:
+   #       - 3000:3000
+   #    cap_add:
+   #       - IPC_LOCK
+   #    links:
+   #       - db
+   #    restart: always
+   #    networks:
+   #       - rede1
+
+   # phpmyadmin:
+   #    image: phpmyadmin/phpmyadmin:latest
+   #    restart: always
+   #    links:
+   #       - db
+   #    ports:
+   #       - 8080:80
+   #    environment:
+   #       PMA_ARBITRARY: 1
+
+networks:
+   rede1:
+      name: rede1
+      driver: bridge
