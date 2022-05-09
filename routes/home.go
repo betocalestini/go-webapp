@@ -29,9 +29,15 @@ func homeGetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func HomePostHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("content-type", "text/html; charset=UTF-8")
+	w.Header().Set("content-type", "application/x-www-form-urlencoded")
 	r.ParseForm()
-	search := r.PostForm.Get("search")
+	//adequações para receber os dados do fetch
+	teste := r.Form
+	var search string
+	for i := range teste {
+		search = i
+	}
+	//adequações para receber os dados do fetch
 	products, err := models.SearchProducts(search)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

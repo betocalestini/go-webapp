@@ -13,6 +13,10 @@ import (
 func main() {
 	models.TestConnection()
 
+	//versão para desenvolvimento
+	// port := "8000"
+
+	// versão para produção
 	port := os.Getenv("PORT")
 	if port == "" {
 		fmt.Println("Not port specified")
