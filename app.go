@@ -13,14 +13,14 @@ import (
 func main() {
 	models.TestConnection()
 
-	PORT := os.Getenv("PORT")
-	if PORT == "" {
+	port := os.Getenv("PORT")
+	if port == "" {
 		fmt.Println("Not port specified")
 		os.Exit(1)
 	}
-	fmt.Printf("Listening Port %s", PORT)
+	fmt.Printf("Listening Port %s", port)
 	utils.LoadTemplates("views/*.html")
 	r := routes.NewRouter()
 	http.Handle("/", r)
-	log.Fatal(http.ListenAndServe(PORT, nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
