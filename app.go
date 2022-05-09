@@ -7,14 +7,17 @@ import (
 	"go-webapp/utils"
 	"log"
 	"net/http"
+	"os"
 )
-
-const PORT = ":8000"
 
 func main() {
 	models.TestConnection()
-	fmt.Println(models.GetCategories())
-	fmt.Println(models.GetProducts())
+
+	PORT := os.Getenv("PORT")
+	if PORT == "" {
+		fmt.Println("Not port specified")
+		os.Exit(1)
+	}
 	fmt.Printf("Listening Port %s", PORT)
 	utils.LoadTemplates("views/*.html")
 	r := routes.NewRouter()

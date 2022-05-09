@@ -80,36 +80,75 @@
          <hr />
 
          <div class="row">
+            <div class="col-md-12">
+               <form action="" method="POST">
+                  <div class="form-group">
+                     <input
+                        type="text"
+                        id="search"
+                        class="form-control"
+                        placeholder="Pesquisar um Produto específico"
+                        value=""
+                     />
+                  </div>
+               </form>
+            </div>
+         </div>
+         <div class="row">
             <h2 class="my-4">Produtos</h2>
             <div class="col-md-12">
-               <table class="table table-hover">
-                  <thead>
-                     <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Preço</th>
-                        <th scope="col">Quantidade</th>
-                        <th scope="col">Total</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {{range .Products}}
-                     <tr>
-                        <td>{{.Id}}</td>
-                        <td>{{.Category.Description}}</td>
-                        <td>{{.Name}}</td>
-                        <td>{{.Price}}</td>
-                        <td>{{.Quantity}}</td>
-                        <td>{{.Amount}}</td>
-                     </tr>
-                     {{end}}
-                  </tbody>
-               </table>
+               <div class="data-table" id="data-table">
+                  <p class="text-center">Digit no campo de busca para encontrar o que deseja</p>
+                  <!-- <table class="table table-hover">
+                     <thead>
+                        <tr>
+                           <th scope="col">Id</th>
+                           <th scope="col">Categoria</th>
+                           <th scope="col">Nome</th>
+                           <th scope="col">Preço</th>
+                           <th scope="col">Quantidade</th>
+                           <th scope="col">Total</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {{range .Products}}
+                        <tr>
+                           <td>{{.Id}}</td>
+                           <td>{{.Category.Description}}</td>
+                           <td>{{.Name}}</td>
+                           <td>{{.Price}}</td>
+                           <td>{{.Quantity}}</td>
+                           <td>{{.Amount}}</td>
+                        </tr>
+                        {{end}}
+                     </tbody>
+                  </table> -->
+               </div>
             </div>
          </div>
       </div>
 
-      <script src="/assets/js/bootstrap.bundle.min.js"></script>
+      <script src="/assets/js/jquery.js"></script>
+      <script src="/assets/js/bootstrap.js"></script>
+      <script>
+         var ajaxSearch = (search) => {
+            $.ajax({
+               type: 'POST',
+               dataType: 'html',
+               url: '/',
+               beforeSend: () => {
+                  $('#data-table').html('Buscando...');
+               },
+               data: { search: search },
+               success: (r) => {
+                  $('#data-table').html(r);
+               },
+            });
+         };
+
+         $('#search').keyup(() => {
+            ajaxSearch($('#search').val());
+         });
+      </script>
    </body>
 </html>
