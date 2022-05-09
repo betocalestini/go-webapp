@@ -28,7 +28,7 @@ func homeGetHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func HomePostHandler(w http.ResponseWriter, r *http.Request) {
+func homePostHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/x-www-form-urlencoded")
 	r.ParseForm()
 	//adequações para receber os dados do fetch

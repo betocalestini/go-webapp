@@ -1,3 +1,10 @@
 .container {
    font-family: 'Roboto', sans-serif;
 }
+
+@media (max-width: 575.98px) {
+   .flex-wrap1 {
+      flex-direction: column !important;
+      flex-wrap: wrap !important;
+   }
+}
