@@ -2,8 +2,8 @@ package models
 
 type User struct {
 	Id        uint64
-	Firstname string
-	Lastname  string
+	FirstName string
+	LastName  string
 	Email     string
 	Password  string
 	Status    string
@@ -19,7 +19,7 @@ func NewUser(user User) (bool, error) {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(user.Firstname, user.Lastname, user.Email, user.Password)
+	_, err = stmt.Exec(user.FirstName, user.LastName, user.Email, user.Password)
 	if err != nil {
 		return false, err
 	}
