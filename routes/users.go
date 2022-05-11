@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"go-webapp/models"
 	"go-webapp/utils"
 	"net/http"
@@ -18,6 +17,11 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 	user.LastName = r.PostForm.Get("lastname")
 	user.Email = r.PostForm.Get("email")
 	user.Password = r.PostForm.Get("password")
-	fmt.Println(user)
-	w.Write([]byte("POST"))
+	// utils.ToJson(w, user)
+	_, err := models.NewUser(user)
+	if err != nil {
+		utils.InternalServerError(w)
+		return
+	}
+	http.Redirect(w, r, "/register", http.StatusFound)
 }
