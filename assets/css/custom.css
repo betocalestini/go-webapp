@@ -1,6 +1,9 @@
 .container {
    font-family: 'Roboto', sans-serif;
 }
+.w-40 {
+   width: 40% !important;
+}
 
 @media (max-width: 767.98px) {
    .largura-fixa {
