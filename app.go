@@ -7,20 +7,21 @@ import (
 	"go-webapp/utils"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
 	models.TestConnection()
 
 	//comentar para produção
-	port := "8000"
+	// port := "8000"
 
 	// comentar para desenvolvimento
-	// port := os.Getenv("PORT")
-	// if port == "" {
-	// 	fmt.Println("Not port specified")
-	// 	os.Exit(1)
-	// }
+	port := os.Getenv("PORT")
+	if port == "" {
+		fmt.Println("Not port specified")
+		os.Exit(1)
+	}
 
 	fmt.Printf("Listening Port %s", port)
 	utils.LoadTemplates("views/*.html")
