@@ -2,6 +2,15 @@
    font-family: 'Roboto', sans-serif;
 }
 
+@media (max-width: 767.98px) {
+   .largura-fixa {
+      position: static;
+      display: inline-block;
+      overflow-x: scroll;
+      overflow-y: hidden; /* PODE ALTERAR PARA "hidden" CASO NÃO QUEIRA SCROLL VERTICAL */
+      /* white-space: nowrap; */
+   }
+}
 @media (max-width: 575.98px) {
    .flex-wrap1 {
       flex-direction: column !important;
