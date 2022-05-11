@@ -8,7 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// dados para desenvolvimento
+// comentar para produção
 const (
 	USER   = "postgres"
 	PASS   = "postgres"
@@ -16,10 +16,10 @@ const (
 )
 
 func Connect() *sql.DB {
-	//versão para desenvolvimento
+	//comentar para produção
 	URL := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", USER, PASS, DBNAME)
 	db, err := sql.Open("postgres", URL)
-	//versão para produção
+	//comentar para desenvolvimento
 	// db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err)

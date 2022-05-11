@@ -12,10 +12,10 @@ import (
 func main() {
 	models.TestConnection()
 
-	//versão para desenvolvimento
+	//comentar para produção
 	port := "8000"
 
-	// versão para produção
+	// comentar para desenvolvimento
 	// port := os.Getenv("PORT")
 	// if port == "" {
 	// 	fmt.Println("Not port specified")

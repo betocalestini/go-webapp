@@ -4,7 +4,10 @@
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.ico.png" />
+
       <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="/assets/css/datatables.min.css" />
       <link rel="stylesheet" href="/assets/css/custom.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -93,7 +96,7 @@
                         type="text"
                         id="search"
                         class="form-control"
-                        placeholder="Pesquisar um Produto específico"
+                        placeholder="Pesquisar produtos no banco de dados"
                         value=""
                      />
                   </div>
@@ -103,9 +106,10 @@
          <div class="row">
             <h2 class="my-4">Produtos</h2>
             <div class="col-md-12">
-               <div class="data-table" id="data-table">
-                  <p class="text-center">Digite no campo de busca para encontrar o que deseja</p>
-                  <!-- <table class="table table-hover">
+               <div id="information"></div>
+               <div class="data-table" id="table-div">
+                  <!-- <p class="text-center">Digite no campo de busca para encontrar o que deseja</p> -->
+                  <table class="table table-hover" id="data-table">
                      <thead>
                         <tr>
                            <th scope="col">Id</th>
@@ -117,18 +121,16 @@
                         </tr>
                      </thead>
                      <tbody>
-                        {{range .Products}}
                         <tr>
-                           <td>{{.Id}}</td>
-                           <td>{{.Category.Description}}</td>
-                           <td>{{.Name}}</td>
-                           <td>{{.Price}}</td>
-                           <td>{{.Quantity}}</td>
-                           <td>{{.Amount}}</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
                         </tr>
-                        {{end}}
                      </tbody>
-                  </table> -->
+                  </table>
                </div>
             </div>
          </div>
@@ -138,6 +140,8 @@
       <script src="/assets/js/bootstrap.js"></script> -->
       <script src="/assets/js/bootstrap.bundle.min.js"></script>
       <script src="/assets/js/ajax.js"></script>
+      <script src="/assets/js/datatables.min.js"></script>
+
       <!-- <script>
          var ajaxSearch = (search) => {
             $.ajax({
