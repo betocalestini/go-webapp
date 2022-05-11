@@ -23,5 +23,9 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		utils.InternalServerError(w)
 		return
 	}
-	http.Redirect(w, r, "/register", http.StatusFound)
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func loginGetHandler(w http.ResponseWriter, r *http.Request) {
+	utils.ExecuteTemplate(w, "login.html", nil)
 }
