@@ -14,18 +14,20 @@ func loginGetHandler(w http.ResponseWriter, r *http.Request) {
 	// untypedMessage := session.Values["MESSAGE"]
 	// message, _ = untypedMessage.(string)
 
-	message, alert, active := sessions.Flash(r, w)
+	message, alert := sessions.Flash(r, w)
 
 	utils.ExecuteTemplate(w, "login.html", struct {
 		Alert utils.Alert
-	}{Alert: utils.NewAlert(message, alert, active)})
+	}{Alert: utils.NewAlert(message, alert)})
 }
 func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	email := r.PostForm.Get("email")
 	password := r.PostForm.Get("password")
 	_, err := auth.Signin(email, password)
-	checkErrAuthenticate(err, w, r)
+	if err != nil {
+		checkErrAuthenticate(err, w, r)
+	}
 }
 
 func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request) {

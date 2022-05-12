@@ -37,11 +37,8 @@ func checkErrRegister(err error, w http.ResponseWriter, r *http.Request) {
 			models.ErrRequiredPassword:
 			message = fmt.Sprintf("%s", err)
 			session.Values["ALERT"] = "danger"
-			session.Values["ACTIVE"] = "active"
-
 		default:
 			session.Values["ALERT"] = "danger"
-			session.Values["ACTIVE"] = "active"
 			utils.InternalServerError(w)
 			return
 		}
