@@ -6,9 +6,9 @@ import (
 	"net/http"
 )
 
-func registerGetHandler(w http.ResponseWriter, r *http.Request) {
-	utils.ExecuteTemplate(w, "register.html", nil)
-}
+// func registerGetHandler(w http.ResponseWriter, r *http.Request) {
+// 	utils.ExecuteTemplate(w, "login.html", nil)
+// }
 
 func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -24,8 +24,4 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	http.Redirect(w, r, "/", http.StatusFound)
-}
-
-func loginGetHandler(w http.ResponseWriter, r *http.Request) {
-	utils.ExecuteTemplate(w, "login.html", nil)
 }

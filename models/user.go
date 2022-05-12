@@ -31,3 +31,27 @@ func NewUser(user User) (bool, error) {
 	}
 	return true, nil
 }
+
+func GetUserByEmail(email string) (User, error) {
+	con := Connect()
+	defer con.Close()
+	sql := "select * from users where email = $1"
+	rs, err := con.Query(sql, email)
+	if err != nil {
+		return User{}, err
+	}
+	defer rs.Close()
+	var user User
+	if rs.Next() {
+		err := rs.Scan(&user.Id,
+			&user.FirstName,
+			&user.LastName,
+			&user.Email,
+			&user.Password,
+			&user.Status)
+		if err != nil {
+			return User{}, err
+		}
+	}
+	return user, nil
+}

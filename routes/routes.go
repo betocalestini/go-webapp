@@ -8,12 +8,13 @@ import (
 
 func NewRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/", homeGetHandler).Methods("GET")
-	r.HandleFunc("/", homePostHandler).Methods("POST")
+	r.HandleFunc("/home", homeGetHandler).Methods("GET")
+	r.HandleFunc("/home", homePostHandler).Methods("POST")
 
-	r.HandleFunc("/login", loginGetHandler).Methods("GET")
+	r.HandleFunc("/", loginGetHandler).Methods("GET")
+	r.HandleFunc("/", loginPostHandler).Methods("POST")
 
-	r.HandleFunc("/register", registerGetHandler).Methods("GET")
+	// r.HandleFunc("/register", registerGetHandler).Methods("GET")
 	r.HandleFunc("/register", registerPostHandler).Methods("POST")
 
 	fileServer := http.FileServer(http.Dir("./assets/"))

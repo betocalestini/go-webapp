@@ -17,9 +17,9 @@
       <link rel="icon" type="image/png" sizes="32x32" href="/assets/images//favicon-32x32.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="/assets/images//favicon-16x16.png" />
    </head>
-   <body class="text-center">
+   <body>
       <div class="container d-flex flex-column">
-         <div>
+         <div class="text-center">
             <img
                class="mb-4 me-4"
                src="/assets/images/gopher.svg"
@@ -28,12 +28,14 @@
                height="150"
             />
             <div class="d-flex mb-4 w-100 justify-content-center">
-               <button class="w-40 btn btn-lg btn-primary" type="button">Entrar</button>
-               <button class="w-40 btn btn-outline-primary 1" type="button">Criar Conta</button>
+               <button class="w-40 btn btn-lg btn-primary" type="button" id="entrar">Entrar</button>
+               <button class="w-40 btn btn-outline-primary 1" type="button" id="criar">
+                  Criar Conta
+               </button>
             </div>
-            <main class="form-signin">
-               <form>
-                  <div hidden>
+            <div class="form-signin" id="div-entrar">
+               <form action="/" method="POST">
+                  <div>
                      <div class="form-floating">
                         <input
                            type="email"
@@ -60,11 +62,11 @@
                      <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
                   </div>
                </form>
-            </main>
+            </div>
          </div>
          <div>
-            <div class="container">
-               <form action="" method="POST">
+            <div class="container" id="div-criar" style="display: none">
+               <form action="/register" method="POST">
                   <div class="form-group col-md-12">
                      <div class="form-row">
                         <div class="d-flex flex-wrap1">
@@ -129,5 +131,25 @@
             </div>
          </div>
       </div>
+      <script>
+         var buttonEntrar = document.getElementById('entrar');
+         var buttonCriar = document.getElementById('criar');
+         var divEntrar = document.getElementById('div-entrar');
+         var divCriar = document.getElementById('div-criar');
+         buttonEntrar.addEventListener('click', () => {
+            console.log('entrar');
+            buttonEntrar.classList.replace('btn-outline-primary', 'btn-primary');
+            buttonCriar.classList.replace('btn-primary', 'btn-outline-primary');
+            divEntrar.style.display = 'block';
+            divCriar.style.display = 'none';
+         });
+         buttonCriar.addEventListener('click', () => {
+            console.log('criar');
+            buttonCriar.classList.replace('btn-outline-primary', 'btn-primary');
+            buttonEntrar.classList.replace('btn-primary', 'btn-outline-primary');
+            divCriar.style.display = 'block';
+            divEntrar.style.display = 'none';
+         });
+      </script>
    </body>
 </html>

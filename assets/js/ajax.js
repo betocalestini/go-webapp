@@ -10,7 +10,7 @@ async function ajaxSearch(search) {
     },
     body: search
   }
-  return await fetch('/', init).then((resposta) => {
+  return await fetch('/home', init).then((resposta) => {
     if (resposta.ok) {
       information.innerHTML = ""
       return resposta.text();

@@ -22,7 +22,7 @@ func main() {
 	// 	os.Exit(1)
 	// }
 
-	fmt.Printf("Listening Port %s", port)
+	fmt.Printf("Listening Port %s \n", port)
 	utils.LoadTemplates("views/*.html")
 	r := routes.NewRouter()
 	http.Handle("/", r)
