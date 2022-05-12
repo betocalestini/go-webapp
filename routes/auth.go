@@ -14,12 +14,11 @@ func loginGetHandler(w http.ResponseWriter, r *http.Request) {
 	// untypedMessage := session.Values["MESSAGE"]
 	// message, _ = untypedMessage.(string)
 
-	message, danger := sessions.Flash(r, w)
+	message, alert, active := sessions.Flash(r, w)
 
 	utils.ExecuteTemplate(w, "login.html", struct {
-		Message string
-		Danger  string
-	}{Message: message, Danger: danger})
+		Alert utils.Alert
+	}{Alert: utils.NewAlert(message, alert, active)})
 }
 func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -35,7 +34,7 @@ func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request) {
 		switch err {
 		case auth.ErrInvalidEmail,
 			auth.ErrInvalidPassword:
-			session.Values["DANGER"] = "danger"
+			session.Values["ALERT"] = "danger"
 			session.Values["MESSAGE"] = fmt.Sprintf("%s", err)
 			session.Save(r, w)
 			http.Redirect(w, r, "/", http.StatusFound)

@@ -14,6 +14,10 @@ type User struct {
 }
 
 func NewUser(user User) (bool, error) {
+	user, err := ValidadeNewUser(user)
+	if err != nil {
+		return false, err
+	}
 	con := Connect()
 	defer con.Close()
 	sql := "insert into users (firstname, lastname, email, password) values ( $1, $2, $3, $4 )"

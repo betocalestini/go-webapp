@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"go-webapp/models"
 	"go-webapp/sessions"
 	"go-webapp/utils"
@@ -20,13 +21,37 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 	user.Password = r.PostForm.Get("password")
 	// utils.ToJson(w, user)
 	_, err := models.NewUser(user)
-	if err != nil {
-		utils.InternalServerError(w)
-		return
-	}
+	checkErrRegister(err, w, r)
+
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func checkErrRegister(err error, w http.ResponseWriter, r *http.Request) {
 	session, _ := sessions.Store.Get(r, "session")
-	session.Values["MESSAGE"] = "Cadastro realizado com sucesso!"
-	session.Values["DANGER"] = "success"
+	message := "Cadastro realizado com sucesso!"
+	if err != nil {
+		switch err {
+		case models.ErrRequiredFirstName,
+			models.ErrRequiredLastName,
+			models.ErrRequiredEmail,
+			models.ErrRequiredPassword:
+			message = fmt.Sprintf("%s", err)
+			session.Values["ALERT"] = "danger"
+			session.Values["ACTIVE"] = "active"
+
+		default:
+			session.Values["ALERT"] = "danger"
+			session.Values["ACTIVE"] = "active"
+			utils.InternalServerError(w)
+			return
+		}
+		session.Values["MESSAGE"] = message
+		session.Values["ALERT"] = "danger"
+		session.Save(r, w)
+		http.Redirect(w, r, "/", http.StatusFound)
+	}
+	session.Values["MESSAGE"] = message
+	session.Values["ALERT"] = "success"
 	session.Save(r, w)
 	http.Redirect(w, r, "/", http.StatusFound)
 }
