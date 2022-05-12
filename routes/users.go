@@ -2,6 +2,7 @@ package routes
 
 import (
 	"go-webapp/models"
+	"go-webapp/sessions"
 	"go-webapp/utils"
 	"net/http"
 )
@@ -23,5 +24,9 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		utils.InternalServerError(w)
 		return
 	}
+	session, _ := sessions.Store.Get(r, "session")
+	session.Values["MESSAGE"] = "Cadastro realizado com sucesso!"
+	session.Values["DANGER"] = "success"
+	session.Save(r, w)
 	http.Redirect(w, r, "/", http.StatusFound)
 }

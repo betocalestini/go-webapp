@@ -1,24 +1,50 @@
 package routes
 
 import (
+	"fmt"
 	"go-webapp/auth"
+	"go-webapp/sessions"
 	"go-webapp/utils"
-	"log"
 	"net/http"
 )
 
 func loginGetHandler(w http.ResponseWriter, r *http.Request) {
-	utils.ExecuteTemplate(w, "login.html", nil)
+	// session, _ := sessions.Store.Get(r, "session")
+	// var message string = ""
+	// untypedMessage := session.Values["MESSAGE"]
+	// message, _ = untypedMessage.(string)
+
+	message, danger := sessions.Flash(r, w)
+
+	utils.ExecuteTemplate(w, "login.html", struct {
+		Message string
+		Danger  string
+	}{Message: message, Danger: danger})
 }
 func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	email := r.PostForm.Get("email")
 	password := r.PostForm.Get("password")
-	user, err := auth.Signin(email, password)
+	_, err := auth.Signin(email, password)
+	checkErrAuthenticate(err, w, r)
+}
+
+func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request) {
+	session, _ := sessions.Store.Get(r, "session")
 	if err != nil {
-		log.Println(err)
-		utils.InternalServerError(w)
-		return
+		switch err {
+		case auth.ErrInvalidEmail,
+			auth.ErrInvalidPassword:
+			session.Values["DANGER"] = "danger"
+			session.Values["MESSAGE"] = fmt.Sprintf("%s", err)
+			session.Save(r, w)
+			http.Redirect(w, r, "/", http.StatusFound)
+			return
+		default:
+			utils.InternalServerError(w)
+			return
+		}
 	}
-	utils.ToJson(w, user)
+	http.Redirect(w, r, "/home", http.StatusFound)
+	// w.Write([]byte("Usuário logado com sucesso!"))
 }

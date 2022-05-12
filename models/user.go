@@ -1,6 +1,8 @@
 package models
 
-import "go-webapp/utils"
+import (
+	"go-webapp/utils"
+)
 
 type User struct {
 	Id        uint64
