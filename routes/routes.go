@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"go-webapp/middleware"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -8,11 +9,13 @@ import (
 
 func NewRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/home", homeGetHandler).Methods("GET")
-	r.HandleFunc("/home", homePostHandler).Methods("POST")
+	r.HandleFunc("/home", middleware.AuthRequired(homeGetHandler)).Methods("GET")
+	r.HandleFunc("/home", middleware.AuthRequired(homePostHandler)).Methods("POST")
 
 	r.HandleFunc("/", loginGetHandler).Methods("GET")
 	r.HandleFunc("/", loginPostHandler).Methods("POST")
+
+	r.HandleFunc("/admin", middleware.AuthRequired(adminGetHandler)).Methods("GET")
 
 	// r.HandleFunc("/register", registerGetHandler).Methods("GET")
 	r.HandleFunc("/register", registerPostHandler).Methods("POST")

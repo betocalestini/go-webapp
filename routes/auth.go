@@ -14,7 +14,7 @@ func loginGetHandler(w http.ResponseWriter, r *http.Request) {
 	var message string
 	var alert string
 	var active string
-	fmt.Println(session)
+
 	if session.Values["MESSAGE"] != nil {
 		message = fmt.Sprintf("%s", session.Values["MESSAGE"])
 	} else {
@@ -34,6 +34,7 @@ func loginGetHandler(w http.ResponseWriter, r *http.Request) {
 	session.Values["MESSAGE"] = ""
 	session.Values["ALERT"] = ""
 	session.Values["ACTIVE"] = ""
+	session.Values["USERID"] = ""
 	session.Save(r, w)
 
 	utils.ExecuteTemplate(w, "login.html", struct {
@@ -44,13 +45,13 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	email := r.PostForm.Get("email")
 	password := r.PostForm.Get("password")
-	_, err := auth.Signin(email, password)
-	checkErrAuthenticate(err, w, r)
+	user, err := auth.Signin(email, password)
+	checkErrAuthenticate(err, w, r, user)
 }
 
-func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request) {
+func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request, user models.User) {
 	session, _ := sessions.Store.Get(r, "session")
-	fmt.Println(session)
+
 	if err != nil {
 		fmt.Println(err)
 		switch err {
@@ -62,7 +63,7 @@ func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request) {
 			session.Values["ACTIVE"] = ""
 			session.Values["MESSAGE"] = fmt.Sprintf("%s", err)
 			session.Save(r, w)
-			fmt.Println(session)
+
 			http.Redirect(w, r, "/", http.StatusFound)
 			return
 		default:
@@ -70,6 +71,8 @@ func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	session.Values["USERID"] = user.Id
+	session.Save(r, w)
 	http.Redirect(w, r, "/home", http.StatusFound)
 	// w.Write([]byte("Usuário logado com sucesso!"))
 }

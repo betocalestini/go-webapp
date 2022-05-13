@@ -43,7 +43,7 @@ func homePostHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Status: Internal Server Error"))
 	}
-	// fmt.Println(products)
+
 	count := len(products)
 	var html string = ""
 	if count > 0 {
