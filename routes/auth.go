@@ -45,9 +45,7 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	email := r.PostForm.Get("email")
 	password := r.PostForm.Get("password")
 	_, err := auth.Signin(email, password)
-	if err != nil {
-		checkErrAuthenticate(err, w, r)
-	}
+	checkErrAuthenticate(err, w, r)
 }
 
 func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request) {
