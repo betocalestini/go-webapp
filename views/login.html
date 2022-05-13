@@ -61,6 +61,7 @@
             </div>
             {{end}}
             <input style="display:none" id="input-active" value="{{.Alert.Active}}"></input>
+       
             <div class="d-flex mb-4 w-100 justify-content-center">
                <button
                   class="w-40 btn btn-lg btn-primary button-max-width-250"
@@ -88,6 +89,7 @@
                            id="floatingInput"
                            placeholder="name@example.com"
                            required
+                           
                         />
                         <label for="floatingInput">Email address</label>
                      </div>
@@ -185,10 +187,11 @@
          </div>
       </div>
       <script>
-         let buttonEntrar = document.getElementById('entrar');
-         let buttonCriar = document.getElementById('criar');
-         let divEntrar = document.getElementById('div-entrar');
-         let divCriar = document.getElementById('div-criar');
+         let $ = document.querySelector.bind(document);
+         let buttonEntrar = $('#entrar');
+         let buttonCriar = $('#criar');
+         let divEntrar = $('#div-entrar');
+         let divCriar = $('#div-criar');
          buttonEntrar.addEventListener('click', () => {
             console.log('entrar');
             buttonEntrar.classList.replace('btn-outline-primary', 'btn-primary');
@@ -203,8 +206,8 @@
             divCriar.style.display = 'block';
             divEntrar.style.display = 'none';
          });
-
-         let inputActive = document.getElementById('input-active')
+         
+         let inputActive = $('#input-active')
          if (inputActive.value == 'active') {
             divCriar.style.display = 'block';
             divEntrar.style.display = 'none';

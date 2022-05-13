@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/badoux/checkmail v1.2.1
 	github.com/gorilla/sessions v1.2.1
 	golang.org/x/crypto v0.0.0-20220511200225-c6db032c6c88
 )

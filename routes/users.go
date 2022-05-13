@@ -23,7 +23,7 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := models.NewUser(user)
 	checkErrRegister(err, w, r)
 
-	http.Redirect(w, r, "/", http.StatusFound)
+	// http.Redirect(w, r, "/", http.StatusFound)
 }
 
 func checkErrRegister(err error, w http.ResponseWriter, r *http.Request) {
@@ -34,6 +34,7 @@ func checkErrRegister(err error, w http.ResponseWriter, r *http.Request) {
 		case models.ErrRequiredFirstName,
 			models.ErrRequiredLastName,
 			models.ErrRequiredEmail,
+			models.ErrInvalidEmail,
 			models.ErrRequiredPassword:
 			message = fmt.Sprintf("%s", err)
 			session.Values["ALERT"] = "danger"
@@ -48,6 +49,7 @@ func checkErrRegister(err error, w http.ResponseWriter, r *http.Request) {
 		session.Values["MESSAGE"] = message
 		session.Values["ALERT"] = "danger"
 		session.Save(r, w)
+
 		http.Redirect(w, r, "/", http.StatusFound)
 	}
 	session.Values["MESSAGE"] = message

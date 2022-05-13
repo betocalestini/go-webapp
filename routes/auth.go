@@ -3,18 +3,38 @@ package routes
 import (
 	"fmt"
 	"go-webapp/auth"
+	"go-webapp/models"
 	"go-webapp/sessions"
 	"go-webapp/utils"
 	"net/http"
 )
 
 func loginGetHandler(w http.ResponseWriter, r *http.Request) {
-	// session, _ := sessions.Store.Get(r, "session")
-	// var message string = ""
-	// untypedMessage := session.Values["MESSAGE"]
-	// message, _ = untypedMessage.(string)
+	session, _ := sessions.Store.Get(r, "session")
+	var message string
+	var alert string
+	var active string
+	fmt.Println(session)
+	if session.Values["MESSAGE"] != nil {
+		message = fmt.Sprintf("%s", session.Values["MESSAGE"])
+	} else {
+		message = ""
+	}
+	if session.Values["ALERT"] != nil {
+		alert = fmt.Sprintf("%s", session.Values["ALERT"])
+	} else {
+		alert = ""
+	}
+	if session.Values["ACTIVE"] != nil {
+		active = fmt.Sprintf("%s", session.Values["ACTIVE"])
+	} else {
+		active = ""
+	}
 
-	message, alert, active := sessions.Flash(r, w)
+	session.Values["MESSAGE"] = ""
+	session.Values["ALERT"] = ""
+	session.Values["ACTIVE"] = ""
+	session.Save(r, w)
 
 	utils.ExecuteTemplate(w, "login.html", struct {
 		Alert utils.Alert
@@ -30,13 +50,19 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 
 func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request) {
 	session, _ := sessions.Store.Get(r, "session")
+	fmt.Println(session)
 	if err != nil {
+		fmt.Println(err)
 		switch err {
-		case auth.ErrInvalidEmail,
+		case auth.ErrEmptyFields,
+			auth.ErrEmailNotFound,
+			models.ErrInvalidEmail,
 			auth.ErrInvalidPassword:
 			session.Values["ALERT"] = "danger"
+			session.Values["ACTIVE"] = ""
 			session.Values["MESSAGE"] = fmt.Sprintf("%s", err)
 			session.Save(r, w)
+			fmt.Println(session)
 			http.Redirect(w, r, "/", http.StatusFound)
 			return
 		default:

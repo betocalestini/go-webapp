@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"go-webapp/utils"
 )
 
@@ -59,5 +60,6 @@ func GetUserByEmail(email string) (User, error) {
 			return User{}, err
 		}
 	}
+	fmt.Println(user)
 	return user, nil
 }
