@@ -30,11 +30,15 @@ func loginGetHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		active = ""
 	}
+	delete(session.Values, "MESSAGE")
+	delete(session.Values, "ALERT")
+	delete(session.Values, "ACTIVE")
+	delete(session.Values, "USERID")
 
-	session.Values["MESSAGE"] = ""
-	session.Values["ALERT"] = ""
-	session.Values["ACTIVE"] = ""
-	session.Values["USERID"] = ""
+	// session.Values["MESSAGE"] = ""
+	// session.Values["ALERT"] = ""
+	// session.Values["ACTIVE"] = ""
+	// session.Values["USERID"] = ""
 	session.Save(r, w)
 
 	utils.ExecuteTemplate(w, "login.html", struct {
@@ -75,4 +79,14 @@ func checkErrAuthenticate(err error, w http.ResponseWriter, r *http.Request, use
 	session.Save(r, w)
 	http.Redirect(w, r, "/home", http.StatusFound)
 	// w.Write([]byte("Usuário logado com sucesso!"))
+}
+
+func logoutGetHandler(w http.ResponseWriter, r *http.Request) {
+	session, _ := sessions.Store.Get(r, "session")
+	delete(session.Values, "MESSAGE")
+	delete(session.Values, "ALERT")
+	delete(session.Values, "ACTIVE")
+	delete(session.Values, "USERID")
+	session.Save(r, w)
+	http.Redirect(w, r, "/", http.StatusFound)
 }

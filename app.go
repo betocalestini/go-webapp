@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go-webapp/models"
 	"go-webapp/routes"
+	"go-webapp/sessions"
 	"go-webapp/utils"
 	"log"
 	"net/http"
@@ -25,6 +26,7 @@ func main() {
 
 	fmt.Printf("Listening Port %s \n", port)
 	utils.LoadTemplates("views/*.html")
+	sessions.SessionOptions("localhost", "/", 1800, true)
 	r := routes.NewRouter()
 	http.Handle("/", r)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))

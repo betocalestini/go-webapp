@@ -9,16 +9,19 @@ import (
 
 func NewRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/home", middleware.AuthRequired(homeGetHandler)).Methods("GET")
-	r.HandleFunc("/home", middleware.AuthRequired(homePostHandler)).Methods("POST")
 
 	r.HandleFunc("/", loginGetHandler).Methods("GET")
 	r.HandleFunc("/", loginPostHandler).Methods("POST")
 
+	r.HandleFunc("/register", registerPostHandler).Methods("POST")
+
+	r.HandleFunc("/home", middleware.AuthRequired(homeGetHandler)).Methods("GET")
+	r.HandleFunc("/home", middleware.AuthRequired(homePostHandler)).Methods("POST")
+
 	r.HandleFunc("/admin", middleware.AuthRequired(adminGetHandler)).Methods("GET")
+	r.HandleFunc("/logout", middleware.AuthRequired(logoutGetHandler)).Methods("GET")
 
 	// r.HandleFunc("/register", registerGetHandler).Methods("GET")
-	r.HandleFunc("/register", registerPostHandler).Methods("POST")
 
 	fileServer := http.FileServer(http.Dir("./assets/"))
 	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", fileServer))
