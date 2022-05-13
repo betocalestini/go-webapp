@@ -26,7 +26,7 @@ func main() {
 
 	fmt.Printf("Listening Port %s \n", port)
 	utils.LoadTemplates("views/*.html")
-	sessions.SessionOptions("localhost", "/", 1800, true)
+	sessions.SessionOptions("https://sheltered-citadel-21048.herokuapp.com", "/", 1800, true)
 	r := routes.NewRouter()
 	http.Handle("/", r)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
