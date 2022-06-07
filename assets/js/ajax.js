@@ -10,7 +10,7 @@ async function ajaxSearch(search) {
     },
     body: search
   }
-  return await fetch('/home', init).then((resposta) => {
+  return await fetch('/products', init).then((resposta) => {
     if (resposta.ok) {
       information.innerHTML = ""
       return resposta.text();
@@ -38,12 +38,6 @@ async function aplicaDataTable(table) {
       [2, 'asc']
 
     ],
-    // columnDefs: [{
-    //   render: function (valor) {
-    //     return parseInt(valor)
-    //   },
-    //   targets: [4, 5, 6, 7, 8, 9]
-    // }],
     language: {
       url: '/assets/js/pt-BR.json'
     },

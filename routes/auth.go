@@ -10,6 +10,12 @@ import (
 )
 
 func loginGetHandler(w http.ResponseWriter, r *http.Request) {
+
+	_, isAuth := sessions.IsLogged(r)
+	if isAuth {
+		http.Redirect(w, r, "/admin", 302)
+	}
+
 	session, _ := sessions.Store.Get(r, "session")
 	var message string
 	var alert string

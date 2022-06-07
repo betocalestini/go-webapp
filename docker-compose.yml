@@ -42,7 +42,7 @@ services:
          PGADMIN_DEFAULT_PASSWORD: '/cpi10int'
          TimeZone: 'America/Sao_Paulo'
       ports:
-         - '54321:80'
+         - '8080:80'
       depends_on:
          - postgres
       networks:

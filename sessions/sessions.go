@@ -42,3 +42,14 @@ func Flash(r *http.Request, w http.ResponseWriter) (string, string, string) {
 	session.Save(r, w)
 	return message, alert, active
 }
+
+func IsLogged(r *http.Request) (uint64, bool) {
+	session, _ := Store.Get(r, "session")
+	untypedUserId := session.Values["USERID"]
+	userId, ok := untypedUserId.(uint64)
+	if !ok {
+		return 0, false
+	} else {
+		return userId, true
+	}
+}
