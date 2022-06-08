@@ -10,11 +10,11 @@ import (
 )
 
 // comentar para produção
-// const (
-// 	USER   = "postgres"
-// 	PASS   = "postgres"
-// 	DBNAME = "postgres"
-// )
+const (
+	USER   = "postgres"
+	PASS   = "postgres"
+	DBNAME = "postgres"
+)
 
 func Connect() *sql.DB {
 	//comentar para produção
@@ -22,6 +22,7 @@ func Connect() *sql.DB {
 	// db, err := sql.Open("postgres", URL)
 	//comentar para desenvolvimento
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+
 	if err != nil {
 		log.Fatal(err)
 	}

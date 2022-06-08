@@ -127,7 +127,7 @@
       <div class="nav-scroller bg-body shadow-sm">
          <nav class="nav" aria-label="Secondary navigation">
             <a class="nav-link active" aria-current="page" href="/admin">Dashboard</a>
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/products">
                Produtos
                <span class="badge bg-light text-dark rounded-pill align-text-bottom"
                   >{{ .AllProducts}}</span
@@ -136,7 +136,8 @@
             <a class="nav-link" href="#"
                >Usuários
                <span class="badge bg-light text-dark rounded-pill align-text-bottom"
-               >{{ .AllUsers}}</span
+                  >{{ .AllUsers}}</span
+               ></a
             >
          </nav>
       </div>
@@ -174,6 +175,7 @@
                   <a href="/product-create" class="btn btn-success w-100">Adicionar</a>
                </div>
             </div>
+
             <div class="container-fluid">
                <h2 class="my-4">Produtos</h2>
                <div class="col-md-12">
