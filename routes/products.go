@@ -138,10 +138,16 @@ func verifyInputProduct(r *http.Request) (models.Product, error) {
 	r.ParseForm()
 	var err error = nil
 	var product models.Product
-	product.Id, err = strconv.ParseUint(r.PostForm.Get("id"), 10, 64)
-	if err != nil {
-		return models.Product{}, err
+	var id string
+	id = r.PostForm.Get("id")
+	fmt.Println(id)
+	if id != "" {
+		product.Id, err = strconv.ParseUint(r.PostForm.Get("id"), 10, 64)
+		if err != nil {
+			return models.Product{}, err
+		}
 	}
+
 	product.Name = r.PostForm.Get("name")
 	price := strings.ReplaceAll(r.PostForm.Get("price"), ",", ".")
 	product.Price, err = strconv.ParseFloat(price, 64)
@@ -241,7 +247,6 @@ func productDeleteGetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if rows > 0 {
 		sessions.Message(fmt.Sprintf("O Produto %d foi deletado permanentemente", productId), "success", "", r, w)
-		fmt.Println("oaisoidoasidjh")
 		fmt.Println(sessions.Store.Get(r, "session"))
 		http.Redirect(w, r, "/products", 302)
 	}
