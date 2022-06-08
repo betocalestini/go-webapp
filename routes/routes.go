@@ -20,6 +20,14 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/products", middleware.AuthRequired(productsGetHandler)).Methods("GET")
 	r.HandleFunc("/products", middleware.AuthRequired(productsPostHandler)).Methods("POST")
 
+	r.HandleFunc("/product-create", middleware.AuthRequired(productCreateGetHandler)).Methods("GET")
+	r.HandleFunc("/product-create", middleware.AuthRequired(productCreatePostHandler)).Methods("POST")
+
+	r.HandleFunc("/product-edit", middleware.AuthRequired(productEditGetHandler)).Methods("GET")
+	r.HandleFunc("/product-edit", middleware.AuthRequired(productEditPostHandler)).Methods("POST")
+
+	r.HandleFunc("/product-delete", middleware.AuthRequired(productDeleteGetHandler)).Methods("GET")
+
 	r.HandleFunc("/admin", middleware.AuthRequired(adminGetHandler)).Methods("GET")
 	r.HandleFunc("/logout", middleware.AuthRequired(logoutGetHandler)).Methods("GET")
 

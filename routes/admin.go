@@ -7,17 +7,16 @@ import (
 )
 
 func adminGetHandler(w http.ResponseWriter, r *http.Request) {
-	products, err := models.GetProducts()
+	allProducts, allUsers, err := models.LoadData()
 	if err != nil {
 		utils.InternalServerError(w)
 		return
 	}
-	total := int64(len(products))
 	utils.ExecuteTemplate(w, "admin.html", struct {
-		Total    int64 `json:"total"`
-		Products []models.Product
+		AllUsers    int64 `json:"AllUsers"`
+		AllProducts int64 `json:"AllProducts"`
 	}{
-		Total:    total,
-		Products: products,
+		AllUsers:    allUsers,
+		AllProducts: allProducts,
 	})
 }

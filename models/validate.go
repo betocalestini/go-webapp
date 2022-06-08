@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/badoux/checkmail"
@@ -105,4 +106,28 @@ func ValidadeNewUser(user User) (User, error) {
 		return User{}, ErrRequiredPassword
 	}
 	return user, nil
+}
+
+func Count(table string) (int64, error) {
+	con := Connect()
+	defer con.Close()
+	sql := fmt.Sprintf("select count(*) from %s", table)
+	var count int64
+	err := con.QueryRow(sql).Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
+func LoadData() (int64, int64, error) {
+	allProducts, err := Count("products")
+	if err != nil {
+		return 0, 0, err
+	}
+	allUsers, err := Count("users")
+	if err != nil {
+		return 0, 0, err
+	}
+	return allProducts, allUsers, nil
 }

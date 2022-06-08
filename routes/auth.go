@@ -41,10 +41,6 @@ func loginGetHandler(w http.ResponseWriter, r *http.Request) {
 	delete(session.Values, "ACTIVE")
 	delete(session.Values, "USERID")
 
-	// session.Values["MESSAGE"] = ""
-	// session.Values["ALERT"] = ""
-	// session.Values["ACTIVE"] = ""
-	// session.Values["USERID"] = ""
 	session.Save(r, w)
 
 	utils.ExecuteTemplate(w, "login.html", struct {

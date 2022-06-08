@@ -9,7 +9,7 @@ create table if not exists category(
 
 create table if not exists products(
   id bigserial primary key,
-  nome varchar(255) not null,
+  name varchar(255) not null,
   price decimal not null,
   quantity int default 0,
   amount decimal default 0.0,
